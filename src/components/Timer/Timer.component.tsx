@@ -11,6 +11,7 @@ export const Timer = () => {
   const [timerStated, setTimerStarted] = useState(false);
   const [intervalState, setIntervalState] = useState(0);
 
+  const [buttonPlayStopCountState, setButtonPlayStopStart] = useState(0);
   const [resetButtonClicked, setResetButtonClicked] = useState(false);
 
   // Application function logic
@@ -18,8 +19,7 @@ export const Timer = () => {
   function secondsCount() {
     const secondsInterval: any = setInterval(() => {
       setSecondsState((prevTime) => (prevTime === 59 ? 0 : prevTime + 1));
-    }, 1000);
-    console.log(secondsState);
+    }, 100);
     setIntervalState(secondsInterval);
 
     return secondsInterval;
@@ -28,7 +28,7 @@ export const Timer = () => {
   function afterSecondsStartFunc() {
     const secondsCountStarted = setTimeout(() => {
       setTimerStarted(true);
-    }, 1100);
+    }, 200);
     return secondsCountStarted;
   }
 
@@ -81,20 +81,20 @@ export const Timer = () => {
         <Button
           variant="success"
           onClick={() => {
-            secondsCount();
-            afterSecondsStartFunc();
-            setResetButtonClicked(false);
+            setButtonPlayStopStart((prevCount) => prevCount + 1);
+            if (
+              !Number.isInteger(buttonPlayStopCountState / 2) &&
+              !resetButtonClicked
+            ) {
+              clearInterval(intervalState);
+            } else {
+              secondsCount();
+              afterSecondsStartFunc();
+              setResetButtonClicked(false);
+            }
           }}
         >
-          Play
-        </Button>{" "}
-        <Button
-          variant="warning"
-          onClick={() => {
-            stopButton();
-          }}
-        >
-          Stop
+          Старт/Пауза
         </Button>{" "}
         <Button
           className={styles["reset-button"]}
@@ -104,7 +104,7 @@ export const Timer = () => {
             setResetButtonClicked(true);
           }}
         >
-          Reset
+          Сброс
         </Button>{" "}
       </div>
     </div>
