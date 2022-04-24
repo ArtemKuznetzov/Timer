@@ -19,7 +19,7 @@ export const Timer = () => {
   function secondsCount() {
     const secondsInterval: any = setInterval(() => {
       setSecondsState((prevTime) => (prevTime === 59 ? 0 : prevTime + 1));
-    }, 100);
+    }, 1000);
     setIntervalState(secondsInterval);
 
     return secondsInterval;
@@ -28,7 +28,7 @@ export const Timer = () => {
   function afterSecondsStartFunc() {
     const secondsCountStarted = setTimeout(() => {
       setTimerStarted(true);
-    }, 200);
+    }, 1100);
     return secondsCountStarted;
   }
 
