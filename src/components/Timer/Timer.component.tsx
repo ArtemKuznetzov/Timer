@@ -12,6 +12,7 @@ export const Timer = () => {
   const [intervalState, setIntervalState] = useState(0);
 
   const [buttonPlayStopCountState, setButtonPlayStopStart] = useState(0);
+  const [buttonPlayStopClicked, setButtonPlayStopClicked] = useState(false);
   const [resetButtonClicked, setResetButtonClicked] = useState(false);
 
   // Application function logic
@@ -30,10 +31,6 @@ export const Timer = () => {
       setTimerStarted(true);
     }, 1100);
     return secondsCountStarted;
-  }
-
-  function stopButton() {
-    clearInterval(intervalState);
   }
 
   function resetButton() {
@@ -81,6 +78,7 @@ export const Timer = () => {
         <Button
           variant="success"
           onClick={() => {
+            setButtonPlayStopClicked(true);
             setButtonPlayStopStart((prevCount) => prevCount + 1);
             if (
               !Number.isInteger(buttonPlayStopCountState / 2) &&
@@ -102,6 +100,8 @@ export const Timer = () => {
           onClick={() => {
             resetButton();
             setResetButtonClicked(true);
+            setButtonPlayStopClicked(false);
+            setButtonPlayStopStart(0);
           }}
         >
           Сброс
